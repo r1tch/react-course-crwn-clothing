@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
-  signIn,
   signInWithPopup,
   GoogleAuthProvider,
   signInWithRedirect,
@@ -32,7 +31,8 @@ const firebaseConfig = {
   measurementId: "G-YT8ENZ63K3",
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+//const firebaseApp = 
+initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
