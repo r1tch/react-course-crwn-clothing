@@ -21,7 +21,7 @@ const Shop = () => {
       dispatch(setCategories(categoriesArray));
     };
     getCategories();
-  }, []);
+  }, [dispatch]);
   /* - do this once only:
   useEffect(() => {
     addCollectionAndDocuments("categories", SHOP_DATA);
