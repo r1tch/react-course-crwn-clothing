@@ -2,6 +2,14 @@
 # Zero-to-Mastery's Complete React course - CRWN Clothing example project
 
 
+### Random Notes
+
+Put 
+
+REACT_APP_STRIPE_PUBLISHABLE_KEY=<the pub key from stripe>
+
+into .env - or set it up on the hosting environment.
+
 
 
 # Getting Started with Create React App
