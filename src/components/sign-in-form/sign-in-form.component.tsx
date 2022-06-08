@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import FormInput from "../form-input/form-input.component";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 
-import "./sign-in-form.styles.scss";
+import "./sign-in-form.styles.tsx";
 import {
   emailSignInStart,
   googleSignInStart,
 } from "../../store/user/user.action";
+import { ButtonsContainer, SignInContainer } from "./sign-in-form.styles";
+import { AuthError, AuthErrorCodes } from "firebase/auth";
 
 const defaultFormFields = {
   email: "",
@@ -30,29 +32,29 @@ const SignInForm = () => {
     dispatch(googleSignInStart());
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent) => { //FormEvent<HTMLFormElement>
     event.preventDefault();
 
     try {
       dispatch(emailSignInStart(email, password));
       resetFormFields();
     } catch (error) {
-      if (error.code === "auth/user-not-found") {
+      if ((error as AuthError).code === AuthErrorCodes.USER_DELETED) {
         alert("user " + email + " unknown");
-      } else if (error.code === "auth/wrong-password") {
+      } else if ((error as AuthError).code === AuthErrorCodes.INVALID_PASSWORD) {
         alert("password " + password + " is wrong");
       }
       console.log(error);
     }
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => { //<HTMLInputElement>
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
   };
 
   return (
-    <div className="sign-up-container">
+    <SignInContainer>
       <h2>Already have an account?</h2>
       <span>Sign in with your email and your password.</span>
       <form onSubmit={handleSubmit}>
@@ -73,7 +75,7 @@ const SignInForm = () => {
           value={password}
         />
 
-        <div className="buttons-container">
+        <ButtonsContainer>
           <Button type="submit">Sign In</Button>
           <Button
             type="button"
@@ -82,9 +84,9 @@ const SignInForm = () => {
           >
             Google Sign In
           </Button>
-        </div>
+        </ButtonsContainer>
       </form>
-    </div>
+    </SignInContainer>
   );
 };
 
